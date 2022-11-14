@@ -1,21 +1,16 @@
 <template>
-  <div>
-    <h5>{{블로그글[0].title}}</h5>
-    <p>{{블로그글[0].date}}</p>
+  <h4>Vue Routing 테스트를 위한 List</h4>
+  <div v-for="(a, i) in 블로그글" :key="i">
+    <!-- router-link 를 사용하면 a태그처럼 하이퍼링크 생성됨 -->
+    <h5 @click="$router.push('/detail/'+i)">{{a.title}}</h5>
+    <!-- <router-link :to="{ path: '/detail/' + i }">{{a.title}}</router-link> -->
+    <p>{{a.date}}</p>
   </div>
-  <div>
-    <h5>{{블로그글[1].title}}</h5>
-    <p>{{블로그글[1].date}}</p>
-  </div>
-    <div>
-    <h5>{{블로그글[2].title}}</h5>
-    <p>{{블로그글[2].date}}</p>
-  </div>  
 </template>
 
 <script>
 export default {
-  name : 'list',
+  name : 'List',
   props: {
     블로그글 : Array,
   }

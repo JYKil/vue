@@ -16,13 +16,13 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link active" aria-current="page" href="#"><router-link to="/">Home</router-link></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
+            <a class="nav-link" href="#"><router-link to="/list">List</router-link></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
+            <a class="nav-link disabled" href="#">Detail</a>
           </li>
           <li class="nav-item">
             <a class="nav-link disabled">Disabled</a>
@@ -32,16 +32,16 @@
     </div>
   </nav>
 
-  <div class="container mt-4">
+  <!-- <div class="container mt-4">
     <h5>Routing 테스트를 위한 개발자 블로그</h5>
     <p>- Vue로 만들었음 -</p>
-  </div>
-
-  <List :블로그글="블로그글"/>
+  </div> -->
+  <router-view :블로그글="블로그글"></router-view> 
+  <!-- <List :블로그글="블로그글"/> -->
 </template>
 
 <script>
-import List from './components/List.vue';
+//import List from './components/List.vue';
 import blog from './assets/blog.js'
 
 export default {
@@ -53,7 +53,7 @@ export default {
     }
   }, 
   components: {
-    List : List,
+    // List : List,
   },
 };
 </script>
