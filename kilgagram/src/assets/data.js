@@ -16,7 +16,7 @@ export default [
         likes: 20,
         date: "Apr 20",
         liked: false,
-        content: "흔한 자랑스타그램",
+        content: "오늘은 출근했나?? 흔한 자랑스타그램",
         filter: "clarendon"
     },
     {
