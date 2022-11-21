@@ -1,23 +1,30 @@
 <template>
   <div class="header">
     <ul class="header-button-left">
-      <li>Cancel</li>
+      <li v-if="step != 0" @click="step--">Cancel</li>
     </ul>
     <ul class="header-button-right">
-      <li>Next</li>
+      <li v-if="step == 1" @click="stepPlus">Next</li>
+      <li v-if="step == 2" @click="publish">발행</li>
     </ul>
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container :게시물="게시물" />
-  <button @click="more">더보기(2개 반복)</button>
+  <Container
+    :게시물="게시물"
+    :step="step"
+    :이미지="이미지"
+    @write="작성글 = $event"
+  />
+  <button v-if="step == 0" @click="more">더보기</button>
 
   <div class="footer">
     <ul class="footer-button-plus">
-      <input type="file" id="file" class="inputfile" />
-      <label for="file" class="input-plus">+</label>
+      <input @change="upload" accept="image/*" type="file" id="file" class="inputfile" />
+      <label v-if="step == 0" for="file" class="input-plus">+</label>
     </ul>
   </div>
+
 </template>
 
 <script>
@@ -29,26 +36,61 @@ export default {
   name: "App",
   data() {
     return {
+      step: 0,
       게시물: data,
       더보기: 0,
+      이미지: "",
+      작성글: "",
     };
   },
   components: {
     Container,
   },
   methods: {
+    stepPlus(){
+      console.log("stepPlus");
+      console.log(this.step);
+      this.step++
+      console.log(this.step);
+    },
+    publish() {
+      console.log("publish");
+      console.log(this.step);
+      var 내게시물 = {
+        name: "JaeYong",
+        userImage: this.이미지,
+        postImage: this.이미지,
+        likes: 18,
+        date: "May 15",
+        liked: false,
+        content: this.작성글,
+        filter: "perpetua",
+      };
+      this.게시물.unshift(내게시물);
+      this.step = 0;
+      console.log(this.step);
+    },
+    upload(e) {
+      console.log("upload");
+      console.log(this.step);
+      let 파일 = e.target.files;
+      let url = URL.createObjectURL(파일[0]);
+      this.이미지 = url;
+      this.step = 1;
+      console.log(this.step);
+    },
     more() {
       axios
         .get(`https://codingapple1.github.io/vue/more${this.더보기}.json`)
         // .then(function (result) {
-        .then (result=>{
-          this.게시물.push(result.data)
-          if (this.더보기<1){
-            this.더보기++
-          }else{
-            this.더보기=0
+        .then((result) => {
+          this.게시물.push(result.data);
+          if (this.더보기 < 1) {
+            this.더보기++;
+          } else {
+            this.더보기 = 0;
           }
-        })
+        });
     },
   },
 };
