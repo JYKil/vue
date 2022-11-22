@@ -41,7 +41,13 @@ export default {
       더보기: 0,
       이미지: "",
       작성글: "",
+      선택한filter:"",
     };
+  },
+  mounted(){
+    this.emitter.on('clickFilter', (a)=>{
+      this.선택한filter = a;
+    });
   },
   components: {
     Container,
@@ -64,7 +70,7 @@ export default {
         date: "May 15",
         liked: false,
         content: this.작성글,
-        filter: "perpetua",
+        filter: this.선택한filter,
       };
       this.게시물.unshift(내게시물);
       this.step = 0;

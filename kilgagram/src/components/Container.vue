@@ -7,22 +7,20 @@
     <!-- 필터선택페이지 -->
     <div v-if="step == 1">
       <div
-        class="upload-image"
+        class="upload-image" :class="선택한filter"
         :style="`background-image:url(${이미지})`"
       ></div>
       <div class="filters">
-        <div class="filter-1"></div>
-        <div class="filter-1"></div>
-        <div class="filter-1"></div>
-        <div class="filter-1"></div>
-        <div class="filter-1"></div>
+        <FilterBox v-for="filter in filters" :key="filter" :이미지="이미지" :filter="filter">
+          {{filter}}
+        </FilterBox>
       </div>
     </div>
 
     <!-- 글작성페이지 -->
     <div v-if="step == 2">
       <div
-        class="upload-image"
+        class="upload-image" :class="선택한filter"
         :style="`background-image:url(${이미지})`"
       ></div>
       <div class="write">
@@ -36,13 +34,26 @@
 
 <script>
 import Post from "./Post.vue";
+import FilterBox from "./FilterBox.vue";
+
 export default {
   name: "Container",
   data() {
-    return {};
+    return {
+      filters : [ "aden", "_1977", "brannan", "brooklyn", "clarendon", "earlybird", "gingham", "hudson", 
+                  "inkwell", "kelvin", "lark", "lofi", "maven", "mayfair", "moon", "nashville", "perpetua", 
+                  "reyes", "rise", "slumber", "stinson", "toaster", "valencia", "walden", "willow", "xpro2"],
+      선택한filter : '',
+    };
+  },
+  mounted(){
+    this.emitter.on('clickFilter', (a)=>{
+      this.선택한filter = a;
+    });
   },
   components: {
     Post,
+    FilterBox,
   },
   props: {
     게시물: Array,
