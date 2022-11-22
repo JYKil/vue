@@ -49,6 +49,7 @@ export default {
   mounted(){
     this.emitter.on('clickFilter', (a)=>{
       this.선택한filter = a;
+      console.log(a);
     });
   },
   components: {
