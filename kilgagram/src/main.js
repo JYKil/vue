@@ -8,5 +8,7 @@ let emitter = mitt();
 let app = createApp(App)
 app.config.globalProperties.emitter = emitter;
 
+// vuex 사용방법. 하기와 같이 하고나면 store.js 에 저장된 모든 state를 모든 components 가 사용 가능
+import store from './store.js'
 
-app.mount('#app')
+app.use(store).mount('#app')

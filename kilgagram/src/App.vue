@@ -24,13 +24,23 @@
       <label v-if="step == 0" for="file" class="input-plus">+</label>
     </ul>
   </div>
+  
+  <!-- 각 components 에서 vuex 사용 방법 -->
+  <!-- <h4>안녕 {{$store.state.name}} {{$store.state.age}}</h4> -->
+  <!-- 하기와 같이 바로 state 변경이 가능하나, 어떤 components 수정했는지 알 수 없기에 직접 수정하지 않는다. -->
+  <!-- <button @click="$store.state.name='길'">이게 되나??</button> -->
+  <!-- 아래 코드 처럼 store 에게 부탁해서 변경하는 방향으로 진행해야함. -->
+  <!-- <button @click="$store.commit('나이증가', 10)" >버튼</button> -->
 
+  <!-- computed, mapState 테스트(mapMutation, mapActions도 있음) 근데 이거 Pinia 로 다 변경된 거 아닌가??  -->
+  <!-- <p>{{nameComputed}} {{age}} {{name}} {{이름테스트}}</p> -->
 </template>
 
 <script>
 import Container from "./components/Container";
 import data from "./assets/data";
 import axios from "axios";
+import {mapState} from "vuex";
 
 export default {
   name: "App",
@@ -52,6 +62,15 @@ export default {
   },
   components: {
     Container,
+  },
+  // computed 에 함수 만들어서 store 내 state 를 가져오게 하여 소스량을 줄일 수 있다.
+  // 각각 함수를 만들어서 호출하기가 귀찮다면 mapstate 를 사용하면 더욱 편하다.
+  computed :{
+    nameComputed(){
+      return this.$store.state.name;
+    },
+    ...mapState(['name','age']),
+    ...mapState({이름테스트:'name'})
   },
   methods: {
     stepPlus(){
@@ -95,7 +114,7 @@ export default {
           if (this.더보기 < 1) {
             this.더보기++;
           } else {
-            this.더보기 = 0;
+            this.더보기=0;
           }
         });
     },

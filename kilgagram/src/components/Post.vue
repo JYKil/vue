@@ -5,9 +5,10 @@
       <span class="profile-name">{{게시물.name}}</span>
     </div>
 
-    <div :class="게시물.filter" class="post-body" :style="{backgroundImage: `url(${게시물.postImage})`}"></div>
+    <div @click="plusLike" :class="게시물.filter" class="post-body" :style="{backgroundImage: `url(${게시물.postImage})`}"></div>
     <div class="post-content">
-      <p>{{게시물.likes}} Likes</p>
+      <!-- <p><span @click="$store.commit('좋아요')">{{$store.state.likes}} Likes </span> -->
+      <p @click="minusLike"> {{likeCount}} Likes</p>
       <p><strong>{{게시물.name}}</strong> {{게시물.content}}</p>
       <p class="date">{{게시물.date}}</p>
     </div>
@@ -19,6 +20,19 @@ export default {
   name: "Post",
   props: {
     게시물: Object,
+  },
+   data() {
+    return {
+      likeCount : this.게시물.likes,
+    };
+  },
+  methods: {
+    minusLike(){
+      this.likeCount--
+    },
+    plusLike(){
+      this.likeCount++
+    }
   },
 };
 </script>
